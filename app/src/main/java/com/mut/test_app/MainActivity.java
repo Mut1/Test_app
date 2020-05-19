@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         new SimpleDateFormat("2019-09-11 11:09:11");
         SimpleDateFormat simpleDateFormat1 =new SimpleDateFormat("HH:mm:ss");
         SimpleDateFormat simpleDateFormat2 =new SimpleDateFormat("HH时mm分ss秒");
@@ -37,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
         try {
             date1=simpleDateFormat1.parse(time1);
             date3=simpleDateFormat1.parse(time3);
-
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -50,7 +48,39 @@ public class MainActivity extends AppCompatActivity {
         Log.e(TAG, "获取当前Data 转 String （只有日期: "+simpleDateFormat1.format(TimeUtils.getNowDate())); //获取当前Data 转 String （只有日期） 12:15:56
         Log.e(TAG, "获取当前Data 转 String （只有日期: "+simpleDateFormat2.format(TimeUtils.getNowDate())); //获取当前Data 转 String （只有日期）:12时17分15秒
         Log.e(TAG, "获取时间差"+TimeUtils.getTimeSpanByNow(time1, TimeConstants.SEC)+"");
-        Log.e(TAG, "获取当前 Date"+minutes+"");
+        Log.e(TAG, "获取当前 字符串 时间差(分）： "+timeSpan_minutes(time1,time3)+"");//获取当前 字符串 时间差： -141
+        Log.e(TAG, "获取当前 字符串 时间差（秒）： "+timeSpan_second(time1,time3)+"");//获取当前 字符串 时间差： -141
+    }
 
+    private long timeSpan_second(String s1,String s2)
+    {    SimpleDateFormat simpleDateFormat =new SimpleDateFormat("HH:mm:ss");
+        long minutes;
+        long second=0l;
+
+        try {Date date1 = simpleDateFormat.parse(time1);
+            Date date3 = simpleDateFormat.parse(time3);
+            long diff = date1.getTime() - date3.getTime();// 这样得到的差值是微秒级别
+            // minutes = diff / (1000 * 60);//分
+            second = diff / (1000 );//秒
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return second;
+    }  private long timeSpan_minutes(String s1,String s2)
+    {    SimpleDateFormat simpleDateFormat =new SimpleDateFormat("HH:mm:ss");
+        long minutes=0l;
+        long second=0l;
+
+        try {Date date1 = simpleDateFormat.parse(time1);
+            Date date3 = simpleDateFormat.parse(time3);
+            long diff = date1.getTime() - date3.getTime();// 这样得到的差值是微秒级别
+             minutes = diff / (1000 * 60);//分
+           // second = diff / (1000 );//秒
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return minutes;
     }
 }
